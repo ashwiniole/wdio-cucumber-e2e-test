@@ -25,3 +25,33 @@ Then(/^URL should match (.*)$/, async function (expectedURL) {
   let url = await browser.getUrl();
   chai.expect(url).to.equal(expectedURL);
 });
+
+/**
+ * Web Interactions
+ */
+Given(/^The web page is launched$/, async function () {
+  await browser.url("/inputs");
+  await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
+  await browser.maximizeWindow();
+});
+
+When(/^Perform web interactions$/, async function () {
+  /**
+   * 1. Input box
+   * Actions:
+   * 1. Type into input box
+   * 2. Clear the field and type or just add value
+   * 3. Click and type
+   * 4. Slow typing
+   */
+  let num = 12345;
+  let strNum = num.toString();
+  let inputBox = await $(`[type="number"]`);
+  //await inputBox.setValue(strNum)
+  await inputBox.click();
+  for (let i = 0; i < strNum.length; i++) {
+    let charStr = strNum.charAt(i);
+    await browser.pause(1000);
+    await browser.keys(charStr);
+  }
+});
