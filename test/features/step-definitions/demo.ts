@@ -30,7 +30,7 @@ Then(/^URL should match (.*)$/, async function (expectedURL) {
  * Web Interactions
  */
 Given(/^The web page is launched$/, async function () {
-  await browser.url("/windows");
+  await browser.url("/basic_auth");
   await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
   await browser.maximizeWindow();
 });
@@ -98,7 +98,6 @@ When(/^Perform web interactions$/, async function () {
   let chkBox2 = await $(`//form[@id="checkboxes"]/input[2]`);
   let isChecked = await chkBox2.isSelected();
   chai.expect(isChecked).to.be.true;
-  await browser.debug();
 
   let chkBoxArr = await $$(`//form[@id="checkboxes"]/input`);
   for (let i = 0; i < chkBoxArr.length; i++) {
@@ -116,7 +115,7 @@ When(/^Perform web interactions$/, async function () {
    * 3. Switch to the window based on title
    * 4. Switch back to the main window
    */
-  let clkHere = $(`=Click Here`)
+  /*let clkHere = $(`=Click Here`)
   let eleSelenium = $(`=Elemental Selenium`)
   await clkHere.click()
   await eleSelenium.click()
@@ -139,7 +138,31 @@ When(/^Perform web interactions$/, async function () {
 
   await browser.switchToWindow(parentWinHandle)
   let headerTextParent = await (await $(`<h3>`)).getText()
-  console.log(`header text parent: ${headerTextParent}`);
-  await browser.debug()
+  console.log(`header text parent: ${headerTextParent}`); */
 
+  /**
+   * 4. Handling alerts
+   */
+
+  /*let alert = await $(`button=Click for JS Alert`);
+  let confirm = await $(`button=Click for JS Confirm`);
+  let prompt = await $(`button=Click for JS Prompt`);
+  await alert.click();
+  if (await browser.isAlertOpen()) {
+    let alertText = await browser.getAlertText();
+    console.log(`alert text: ${alertText}`);
+    await browser.acceptAlert();
+  }
+  await confirm.click();
+  if (await browser.isAlertOpen()) {
+    let confirmText = await browser.getAlertText();
+    console.log(`confirm text: ${confirmText}`);
+    await browser.dismissAlert();
+  }
+  await prompt.click();
+  if (await browser.isAlertOpen()) {
+    await browser.sendAlertText("Hello Ash");
+    await browser.acceptAlert();
+  }*/
+  await browser.debug();
 });
