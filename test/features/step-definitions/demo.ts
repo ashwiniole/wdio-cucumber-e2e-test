@@ -30,7 +30,7 @@ Then(/^URL should match (.*)$/, async function (expectedURL) {
  * Web Interactions
  */
 Given(/^The web page is launched$/, async function () {
-  await browser.url("/windows");
+  await browser.url("/frames");
   await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
   await browser.maximizeWindow();
 });
@@ -54,7 +54,6 @@ When(/^Perform web interactions$/, async function () {
   //await browser.pause(1000);
   //await browser.keys(charStr);
   //}
-
   /**
    * 2. Dropdown
    * Actions
@@ -62,7 +61,6 @@ When(/^Perform web interactions$/, async function () {
    * 2. Select by attribute, text, index
    * 3. Get a list of options
    */
-
   /*let dropDown = await $(`//select/option[@selected="selected"]`)
   let text = await dropDown.getText()
   chai.expect(text).to.equal("Please select an option")
@@ -81,7 +79,6 @@ When(/^Perform web interactions$/, async function () {
     console.log(text);
   }
   console.log(`Options array: ${arr}`);*/
-
   /**
    * 3. Checkbox
    * Actions:
@@ -98,7 +95,6 @@ When(/^Perform web interactions$/, async function () {
   let chkBox2 = await $(`//form[@id="checkboxes"]/input[2]`);
   let isChecked = await chkBox2.isSelected();
   chai.expect(isChecked).to.be.true;
-  await browser.debug();
 
   let chkBoxArr = await $$(`//form[@id="checkboxes"]/input`);
   for (let i = 0; i < chkBoxArr.length; i++) {
@@ -107,7 +103,6 @@ When(/^Perform web interactions$/, async function () {
       ele.click();
     }
   }*/
-
   /**
    * 4. Windows handling
    * Steps:
@@ -116,7 +111,7 @@ When(/^Perform web interactions$/, async function () {
    * 3. Switch to the window based on title
    * 4. Switch back to the main window
    */
-  let clkHere = $(`=Click Here`)
+  /*let clkHere = $(`=Click Here`)
   let eleSelenium = $(`=Elemental Selenium`)
   await clkHere.click()
   await eleSelenium.click()
@@ -139,7 +134,55 @@ When(/^Perform web interactions$/, async function () {
 
   await browser.switchToWindow(parentWinHandle)
   let headerTextParent = await (await $(`<h3>`)).getText()
-  console.log(`header text parent: ${headerTextParent}`);
-  await browser.debug()
-
+  console.log(`header text parent: ${headerTextParent}`); */
+  /**
+   * 4. Handling alerts
+   */
+  /*let alert = await $(`button=Click for JS Alert`);
+  let confirm = await $(`button=Click for JS Confirm`);
+  let prompt = await $(`button=Click for JS Prompt`);
+  await alert.click();
+  if (await browser.isAlertOpen()) {
+    let alertText = await browser.getAlertText();
+    console.log(`alert text: ${alertText}`);
+    await browser.acceptAlert();
+  }
+  await confirm.click();
+  if (await browser.isAlertOpen()) {
+    let confirmText = await browser.getAlertText();
+    console.log(`confirm text: ${confirmText}`);
+    await browser.dismissAlert();
+  }
+  await prompt.click();
+  if (await browser.isAlertOpen()) {
+    await browser.sendAlertText("Hello Ash");
+    await browser.acceptAlert();
+  }*/
+  /**
+   * 5. File upload
+   */
+  /*
+  let fileUpload = await $(`#file-upload`);
+  await fileUpload.addValue(`${process.cwd()}/data/fileupload/dummy.txt`);
+  await (await $(`#file-submit`)).click();
+  */
+  /*
+await $(`=iFrame`).click()
+let element = await $(`#mce_0_ifr`) 
+await browser.switchToFrame(element)
+await (await $(`#tinymce`)).click()
+await browser.keys(["Meta","A"])
+await browser.pause(2000)
+await browser.keys("Delete")
+let ele = await $(`#tinymce`)
+await ele.addValue(`Typing into the frame...`)
+await browser.switchToParentFrame()
+*/
+  // await browser.debug();
+  /**
+   * 7. Basic scrolling
+   * Methods: (Element methods)
+   * 1. scrollIntoView
+   */
+  
 });
