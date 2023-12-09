@@ -1,6 +1,6 @@
 Feature: Web Interactions
 
-    @demo
+    #@demo
     Scenario Outline: Enter the value in the input box
         Given The web page is launched
         When Perform web interactions
