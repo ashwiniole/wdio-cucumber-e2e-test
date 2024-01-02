@@ -1,5 +1,10 @@
 import { Then } from "@wdio/cucumber-framework";
 import chai from "chai";
+//var chai = require('chai');
+//var assert = chai.assert;
+//var expect = chai.expect;
+//var should = chai.should;
+
 
 Then(/^Inventory page should list (.*)$/, async function (noOfProducts) {
     if(!noOfProducts) throw Error(`Invalid product count provided: ${noOfProducts}`)

@@ -1,8 +1,12 @@
 {
     "compilerOptions": {
         "moduleResolution": "node",
-        "module": "ESNext",
-        "target": "es2022",
+        "module": "ES6",
+        "target": "ES6",
+        "lib": [
+            "es2022",
+            "dom"
+        ],
         "types": [
             "node",
             "@wdio/globals/types",
@@ -11,16 +15,17 @@
         ],
         "skipLibCheck": true,
         "noEmit": true,
-        
+        //"allowImportingTsExtensions": true,
         "resolveJsonModule": true,
+        "esModuleInterop": true,
         "isolatedModules": true,
-        "strict": true,
+        "strict": false,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "esModuleInterop": true,
         "noFallthroughCasesInSwitch": true
     },
     "include": [
-        "test"
+        "test",
+        "wdio.conf.ts"
     ]
 }

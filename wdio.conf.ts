@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+dotenv.config();
+let headless = process.env.HEADLESS;
+let debug = process.env.DEBUG;
 import type { Options } from '@wdio/types'
 export const config: Options.Testrunner = {
     //
@@ -26,13 +30,12 @@ export const config: Options.Testrunner = {
     // worker process. In order to have a group of spec files run in the same worker
     // process simply enclose them in an array within the specs array.
     //
-    // If you are calling `wdio` from an NPM script (see https://docs.npmjs.com/cli/run-script),
-    // then the current working directory is where your `package.json` resides, so `wdio`
-    // will be called from there.
+    // The path of the spec files will be resolved relative from the directory of
+    // of the config file unless it's absolute.
     //
     specs: [
-        './test/features/**/*.feature'
         // ToDo: define location for spec files here
+        `${process.cwd()}/test/features/**/*.feature`
     ],
     // Patterns to exclude.
     exclude: [
@@ -62,9 +65,20 @@ export const config: Options.Testrunner = {
     //
     capabilities: [{
         browserName: 'chrome',
-        "goog:chromeOptions": {
-            args: ["--disable-web-security"]
-        }
+        acceptInsecureCerts: true,
+       "goog:chromeOptions": {
+            args:
+                headless.toUpperCase() === "Y"
+                    ? [
+                          "--disable-web-security",
+                          "--headless",
+                          "--disable-dev-shm-usage",
+                          "--no-sandbox",
+                          "--window-size=1920,1080",
+                      ]
+                    : [],
+        }, 
+        timeouts: { implicit: 10000, pageLoad: 20000, script: 30000 }, 
     }],
 
     //
@@ -74,7 +88,7 @@ export const config: Options.Testrunner = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'error',
+    logLevel: debug.toUpperCase() === "Y" ? 'info' : 'error',
     //
     // Set specific log levels per logger
     // loggers:
@@ -98,7 +112,7 @@ export const config: Options.Testrunner = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://localhost/',
+    baseUrl: 'http://localhost',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -123,6 +137,7 @@ export const config: Options.Testrunner = {
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
     framework: 'cucumber',
+    
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -138,7 +153,6 @@ export const config: Options.Testrunner = {
     // see also: https://webdriver.io/docs/dot-reporter
     reporters: ['spec',['allure', {outputDir: 'allure-results'}]],
 
-    //
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
         // <string[]> (file/dir) require files before executing features
@@ -164,7 +178,7 @@ export const config: Options.Testrunner = {
         // <boolean> Enable this config to treat undefined definitions as warnings.
         ignoreUndefinedDefinitions: false
     },
-    
+
     //
     // =====
     // Hooks
@@ -181,7 +195,7 @@ export const config: Options.Testrunner = {
     // onPrepare: function (config, capabilities) {
     // },
     /**
-     * Gets executed before a worker process is spawned and can be used to initialise specific service
+     * Gets executed before a worker process is spawned and can be used to initialize specific service
      * for that worker as well as modify runtime environments in an async fashion.
      * @param  {string} cid      capability id (e.g 0-0)
      * @param  {object} caps     object containing capabilities for session that will be spawn in the worker
@@ -328,5 +342,17 @@ export const config: Options.Testrunner = {
     * @param {string} newSessionId session ID of the new session
     */
     // onReload: function(oldSessionId, newSessionId) {
+    // }
+    /**
+    * Hook that gets executed before a WebdriverIO assertion happens.
+    * @param {object} params information about the assertion to be executed
+    */
+    // beforeAssertion: function(params) {
+    // }
+    /**
+    * Hook that gets executed after a WebdriverIO assertion happened.
+    * @param {object} params information about the assertion that was executed, including its results
+    */
+    // afterAssertion: function(params) {
     // }
 }
