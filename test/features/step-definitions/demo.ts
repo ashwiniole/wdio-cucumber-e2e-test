@@ -1,5 +1,5 @@
 import { Given, When, Then } from "@wdio/cucumber-framework";
-import chai from "chai";
+import {expect} from "chai";
 
 Given(/^Google browser is launched$/, async function () {
   console.log("Before launching the browser");
@@ -26,7 +26,7 @@ Then(/^URL should match (.*)$/, async function (expectedURL) {
     return await browser.getTitle() ==="WebdriverIO · Next-gen browser and mobile automation test framework for Node.js | WebdriverIO"
   }, {timeout: 20000, interval: 500, timeoutMsg: `Failed loading WDIO web page: ${await browser.getTitle()}`})
   let url = await browser.getUrl();
-  chai.expect(url).to.equal(expectedURL);
+  expect(url).to.equal(expectedURL);
 });
 
 /**

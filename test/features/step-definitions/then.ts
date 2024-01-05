@@ -1,5 +1,5 @@
 import { Then } from "@wdio/cucumber-framework";
-import chai from "chai";
+import {expect} from "chai";
 //var chai = require('chai');
 //var assert = chai.assert;
 //var expect = chai.expect;
@@ -10,7 +10,7 @@ Then(/^Inventory page should list (.*)$/, async function (noOfProducts) {
     if(!noOfProducts) throw Error(`Invalid product count provided: ${noOfProducts}`)
     let eleArr = await $$(`.inventory_item`)
     console.log(eleArr.length);
-    chai.expect(eleArr.length).to.equal(parseInt(noOfProducts))
+    expect(eleArr.length).to.equal(parseInt(noOfProducts))
 })
 
 /**
@@ -32,5 +32,6 @@ Then(/^Validate all the products have valid price$/, async function(){
     console.log(`>> Price in number: ${priceNumArr}`);
 
     let invalidPriceArr = priceNumArr.filter(ele => ele<=0)
-    chai.expect(invalidPriceArr.length).to.equal(0)
+    expect(invalidPriceArr.length).to.equal(0)
 })
+
