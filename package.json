@@ -7,19 +7,21 @@
   "author": "Ash",
   "license": "ISC",
   "devDependencies": {
-    "@types/chai": "^4.3.11",
+    "@types/chai": "^4.3.4",
     "@wdio/allure-reporter": "^8.27.0",
     "@wdio/cli": "^8.27.1",
     "@wdio/cucumber-framework": "^8.27.1",
     "@wdio/local-runner": "^8.27.0",
     "@wdio/spec-reporter": "^8.27.0",
-    "chai": "^5.0.0",
+    "chai": "^4.3.7",
     "chromedriver": "120.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
-    "wdio-chromedriver-service": "^8.1.1"
+    "wdio-chromedriver-service": "^8.1.1",
+    "winston": "^3.11.0"
   },
   "scripts": {
+    "build": "tsc",
     "demo": "export HEADLESS=N && npx wdio wdio.conf.ts --cucumberOpts.tagExpression='@demo'",
     "test:demo": "export HEADLESS=N && wdio run config/wdio.test.conf.ts --cucumberOpts.tagExpression='@demo'",
     "test:debug": "export DEBUG=N && export HEADLESS=N && npx wdio config/wdio.test.conf.ts --cucumberOpts.tagExpression='@demo'",
